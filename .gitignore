@@ -1,0 +1,6 @@
+*/*/__pycache__
+
+*/*/*.txt
+
+read_input.py
+*/*/read_input.py
