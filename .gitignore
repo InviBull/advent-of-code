@@ -1,6 +1,8 @@
 */*/__pycache__
 
+# Input
 */*/*.txt
 
+# Advent Tools
 read_input.py
 */*/read_input.py
