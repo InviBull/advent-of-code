@@ -3,13 +3,13 @@ from aoc_helper import fetch, run
 
 class Solution:
     def __init__(self):
-        self.raw_data = fetch("04").splitlines()
+        self.raw_data = fetch("04")
         self.n = len(self.raw_data)
         self.nums, self.win_nums = self.process_data()
 
     def process_data(self):
         nums, win_nums = [], []
-        for card in self.raw_data:
+        for card in self.raw_data.splitlines():
             num, win_num = card.split(": ")[1].split(" | ")
             nums.append(list(map(int, num.split())))
             win_nums.append(list(map(int, win_num.split())))
