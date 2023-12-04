@@ -1,41 +1,53 @@
+from aoc_helper import fetch, run
 import re
-from read_input import fetch
 
-data = fetch("01").splitlines()
-p1 = 0
 
-for word in data:
-    x = ""
+class Solution:
+    def __init__(self):
+        self.raw_data = fetch("01")
+        self.digits = {"one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6, "seven": 7, "eight": 8,
+                       "nine": 9}
+        self.numbers = self.process_data()
 
-    indices = {}
+    def process_data(self):
+        numbers = []
+        for word in self.raw_data.splitlines():
+            indices = {}
+            for num in self.digits:
+                for i in [m.start() for m in re.finditer(num, word)]:
+                    indices[i] = num
 
-    for match in re.compile(r'\d+').finditer(word):
-        for i in range(match.start(), match.end()):
-            indices[i] = word[i]
+            for match in re.compile(r'\d+').finditer(word):
+                for i in range(match.start(), match.end()):
+                    indices[i] = int(word[i])
 
-    req = list(sorted(indices.keys()))
-    p1 += int(indices[req[0]] + indices[req[-1]])
+            numbers.append(list(dict(sorted(indices.items())).values()))
 
-print(p1)
+        return numbers
 
-# p2
-p2 = 0
-digits = {"one": "1", "two": "2", "three": "3", "four": "4", "five": "5", "six": "6", "seven": "7", "eight": "8",
-          "nine": "9"}
+    def calculate_p1(self):
+        p1 = 0
+        for line in self.numbers:
+            for i, num in enumerate(line):
+                if num not in self.digits:
+                    p1 += 10 * num
+                    break
 
-for word in data:
-    x = ""
+            for i, num in enumerate(line[::-1]):
+                if num not in self.digits:
+                    p1 += num
+                    break
 
-    indices = {}
-    for i in digits:
-        for j in [m.start() for m in re.finditer(i, word)]:
-            indices[j] = digits[i]
+        return p1
 
-    for match in re.compile(r'\d+').finditer(word):
-        for i in range(match.start(), match.end()):
-            indices[i] = word[i]
+    def calculate_p2(self):
+        p2 = 0
+        for line in self.numbers:
+            p2 += 10 * self.digits[line[0]] if line[0] in self.digits else 10 * line[0]
+            p2 += self.digits[line[-1]] if line[-1] in self.digits else line[-1]
 
-    req = list(sorted(indices.keys()))
-    p2 += int(indices[req[0]] + indices[req[-1]])
+        return p2
 
-print(p2)
+
+if __name__ == "__main__":
+    run(Solution)

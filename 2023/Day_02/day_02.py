@@ -1,30 +1,38 @@
-# import re
-from read_input import fetch
+from aoc_helper import fetch, run
 
-data = fetch("02").splitlines()
-p1, p2 = 0, 0
 
-for index, game in enumerate(data):
-    is_possible = True
-    sets = game.split(": ")[1].split(";")
-    r, g, b = 0, 0, 0
+class Solution:
+    def __init__(self):
+        self.raw_data = fetch("02")
+        self.games = self.process_data()
 
-    for set_ in sets:
-        for val in set_.split(", "):
-            num, color = val.split()
-            if color == "red":
-                if int(num) > 12: is_possible = False
-                r = max(int(num), r)
-            if color == "green":
-                if int(num) > 13: is_possible = False
-                g = max(int(num), g)
-            if color == "blue":
-                if int(num) > 14: is_possible = False
-                b = max(int(num), b)
+    def process_data(self):
+        games = {}
+        for game in self.raw_data.splitlines():
+            i, records = game.split(": ")
+            i = int(i.split()[1])
+            games[i] = {"r": 0, "g": 0, "b": 0}
+            for record in records.split("; "):
+                for values in record.split(", "):
+                    num, color = values.split()
+                    games[i][color[0]] = max(int(num), games[i][color[0]])
+        return games
 
-    if is_possible:
-        p1 += index + 1
-    p2 += r * g * b
+    def calculate_p1(self):
+        p1 = 0
+        for i in self.games:
+            game = self.games[i]
+            if game["r"] <= 12 and game["g"] <= 13 and game["b"] <= 14:
+                p1 += i
+        return p1
 
-print(p1)
-print(p2)
+    def calculate_p2(self):
+        p2 = 0
+        for i in self.games:
+            game = self.games[i]
+            p2 += game["r"] * game["g"] * game["b"]
+        return p2
+
+
+if __name__ == "__main__":
+    run(Solution)

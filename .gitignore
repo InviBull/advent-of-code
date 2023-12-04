@@ -4,5 +4,5 @@
 */*/*.txt
 
 # Advent Tools
-read_input.py
+aoc_helper.py
 */*/read_input.py
