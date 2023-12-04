@@ -2,8 +2,8 @@ from aoc_helper import fetch
 
 
 def parse_card(card):
-    num, winning_num = card.split(": ")[1].split(" | ")
-    return list(map(int, num.split())), list(map(int, winning_num.split()))
+    num, win_num = card.split(": ")[1].split(" | ")
+    return list(map(int, num.split())), list(map(int, win_num.split()))
 
 
 def calculate_p1():
