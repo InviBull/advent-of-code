@@ -1,12 +1,13 @@
 from aoc_helper import fetch, run
 from math import lcm
 
+
 class Solution:
     def __init__(self):
         self.directions, self.nodes, self.start = self._parse_data()
         self.length = len(self.directions)
 
-    def _parse_data(self):
+    def _parse_data(self) -> (str, dict[str, list[str]], list[str]):
         raw_data = fetch("08", "2023").split("\n\n")
         directions = raw_data[0].strip()
 
@@ -20,7 +21,7 @@ class Solution:
 
         return directions, nodes, start
 
-    def _cal_moves(self, pos: str, part: {1, 2}):
+    def _cal_moves(self, pos: str, part: {1, 2}) -> int:
         moves = 0
         curr = 0
 
@@ -33,10 +34,10 @@ class Solution:
 
         return moves
 
-    def calculate_p1(self):
+    def calculate_p1(self) -> int:
         return self._cal_moves("AAA", 1)
 
-    def calculate_p2(self):
+    def calculate_p2(self) -> int:
         return lcm(*[self._cal_moves(pos, 2) for pos in self.start])
 
 if __name__ == "__main__":
