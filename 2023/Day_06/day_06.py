@@ -15,9 +15,7 @@ class Solution:
         p1 = 1
         for T, D in self.data:
             rootD = (T**2 - 4 * D) ** 0.5
-            t1 = math.ceil((T - rootD) / 2)
-            t2 = math.floor((T + rootD) / 2)
-            p1 *= (t2 - t1 + 1)
+            p1 *= (math.ceil((T - rootD) / 2) - math.floor((T + rootD) / 2) + 1)
         return p1
 
     def calculate_p2(self):
