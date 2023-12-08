@@ -1,10 +1,11 @@
-*/*/__pycache__
+# IDE Settings
+.vscode
+*/__pycache__
 /__pycache__
 /.idea
 
 # Input
-*/*/*.txt
+*/*.txt
 
 # Advent Tools
 aoc_helper.py
-*/*/read_input.py
